@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const auth = require('../auth.json');
 const owner = auth.ownerid;
 module.exports.run = async function(bot, message, args){
-    let bicon = bot.displayAvatarURL;
+    let bicon = bot.user.displayAvatarURL;
 	let botembed = new Discord.RichEmbed()
 		.setDescription("Bot Information")
 		.setThumbnail(bicon)
