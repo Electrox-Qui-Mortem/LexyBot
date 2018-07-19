@@ -7,13 +7,17 @@ module.exports.run = async function(bot, message, args){
     message.delete().catch(O_o=>{})
 	let pUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if(!pUser) return message.channel.send("Couldn't find user.");
-    if(ppoints[pUser.id + ''] == undefined){
-        ppoints[pUser.id + ''] = {
+    if(points[pUser.id + ''] == undefined){
+        points[pUser.id + ''] = {
             points: 0
         }
+        fs.writeFile(__dirname + "/../points.json", JSON.stringify(points), (err)=>{
+            if (err) console.log(err)
+        });
     }
-    message.channel.send(pUser.user.username + " has " + ppoints[pUser.id + ''].points + " points");
     
+    message.channel.send(pUser.user.username + " has " + points[pUser.id + ''].points + " points");
+    return points;
 }
 
 module.exports.help = {

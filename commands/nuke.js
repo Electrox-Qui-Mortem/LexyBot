@@ -7,7 +7,6 @@ module.exports.run = async function(bot, message, args){
     message.channel.fetchMessages({limit:toNuke})
     .then(function(list){
         message.channel.bulkDelete(list);
-        
     }, function(err){
         
     })

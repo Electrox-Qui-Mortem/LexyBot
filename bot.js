@@ -5,9 +5,10 @@ app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendStatus(200);
 });
-app.listen(process.env.PORT);
+app.listen(1000);
+
 setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+  	http.get(`https://innate-green.glitch.me/`);
 }, 280000)
 const Discord = require('discord.js');
 const auth = require('./auth.json');
@@ -28,6 +29,7 @@ fs.readdir(__dirname + "/commands/", function(err, files){
 		bot.commands.set(props.help.name, props);
 	})
 })
+let points = JSON.parse(fs.readFileSync(__dirname + "/../points.json"))
 bot.on("ready", async function(){
 	if(bot.guilds.size < 1)
 		console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
@@ -36,7 +38,7 @@ bot.on("ready", async function(){
 	bot.user.setActivity("with your soul");
 })
 
-bot.login(auth.token[1]);
+bot.login(auth.token[0]);
 bot.on("message", async function(message){
 	if(message.author.bot) return
 	if(message.channel.type === 'dm') return
@@ -45,6 +47,11 @@ bot.on("message", async function(message){
 	let args = messageArray.slice(1);
 	let commandfile = bot.commands.get(cmd.slice(prefix.length));
 	if(cmd.startsWith('!')){
-		if(commandfile) commandfile.run(bot, message, args)
+		if(commandfile){
+			if(cmd == "removepoints" || cmd == "points" || cmd == "addpoints"){
+				points = commandfile.run(bot, message, args, points);
+				console.log(points);
+			}
+		}
 	}
 });
