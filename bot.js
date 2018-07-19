@@ -5,7 +5,7 @@ app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendStatus(200);
 });
-app.listen(1000);
+app.listen(process.env.PORT);
 
 setInterval(() => {
   	http.get(`https://innate-green.glitch.me/`);
@@ -29,7 +29,7 @@ fs.readdir(__dirname + "/commands/", function(err, files){
 		bot.commands.set(props.help.name, props);
 	})
 })
-let points = JSON.parse(fs.readFileSync(__dirname + "/../points.json"))
+let points = JSON.parse(fs.readFileSync(__dirname + "/points.json"));
 bot.on("ready", async function(){
 	if(bot.guilds.size < 1)
 		console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
@@ -48,10 +48,15 @@ bot.on("message", async function(message){
 	let commandfile = bot.commands.get(cmd.slice(prefix.length));
 	if(cmd.startsWith('!')){
 		if(commandfile){
-			if(cmd == "removepoints" || cmd == "points" || cmd == "addpoints"){
-				points = commandfile.run(bot, message, args, points);
-				console.log(points);
-			}
+			if(cmd == "!removepoints" || cmd == "!points" || cmd == "!addpoints"){
+				commandfile.run(bot, message, args, points)
+        		.then(function(res){
+        	 		console.log(res); 
+        		});
+			}else {
+       	 		console.log(typeof cmd, cmd);
+        		commandfile.run(bot, message, args, points);
+     		}
 		}
 	}
 });
