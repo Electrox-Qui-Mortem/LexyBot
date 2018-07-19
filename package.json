@@ -1,6 +1,6 @@
 {
   "name": "lexybot",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "My own Discord bot",
   "main": "bot.js",
   "author": "Electrox-Qui-Mortem",
