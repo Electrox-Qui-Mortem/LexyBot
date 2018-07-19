@@ -9,7 +9,7 @@ app.listen(process.env.PORT);
 const fs = require('fs');
 let points = JSON.parse(fs.readFileSync(__dirname + "/points.json"));
 setInterval(() => {
-  	http.get(`https://innate-green.glitch.me/`);
+  	http.get(`http://innate-green.glitch.me/`);
 }, 280000)
 const Discord = require('discord.js');
 const auth = require('./auth.json');
@@ -37,7 +37,7 @@ bot.on("ready", async function(){
 	bot.user.setActivity("with your soul");
 })
 
-bot.login(auth.token[0]);
+bot.login(auth.token[1]);
 bot.on("message", async function(message){
 	if(message.author.bot) return
 	if(message.channel.type === 'dm') return
